@@ -10,5 +10,7 @@
 *.blg
 *.bbl
 *.lol
+*.fdb_latexmk
+*.fls
 # !/Gene_Thesis_2021/bookname.pdf
 # !/Gene_Thesis_2021/Gene-thesis-ntut-2021(口試前版本).pdf
