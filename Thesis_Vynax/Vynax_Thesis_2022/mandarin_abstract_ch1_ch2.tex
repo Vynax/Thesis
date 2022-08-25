@@ -20,7 +20,7 @@
 \setCJKmainfont{標楷體}                                      %設定中文預設字體
 \setCJKsansfont{標楷體}
 % \setCJKmainfont{cwTeX Q Kai Medium}                       %若標楷體無法使用之中文預設字體
-% \setCJKsansfont{cwTeX Q Kai Medium}
+% \setCJKsansfont{cwTeX Q Kai Medium}citation
 
 \usepackage{eso-pic}										%插入浮水印
 \usepackage{graphicx}										%插入圖片
@@ -58,49 +58,49 @@
 \input{def.tex}
 
 \begin{document}
-%\includepdf[pages={1}]{bookname.pdf}
+\includepdf[pages={1}]{bookname.pdf}
 
 \AddToShipoutPicture{\WatermarkPicture}                     % 加入浮水印
 
 \pagenumbering{roman} 										%論文篇前之頁數為羅馬數字
 \input{cabstract.tex}										%中文摘要
-% \input{eabstract.tex}										%英文摘要
-% \input{thanks.tex}											%誌謝
-% \newpage
+\input{eabstract.tex}										%英文摘要
+\input{thanks.tex}											%誌謝
+\newpage
 
 
-% \addcontentsline{toc}{chapter}{目錄}
-% \tableofcontents 											%引入目錄
-% \newpage
+\addcontentsline{toc}{chapter}{目錄}
+\tableofcontents 											%引入目錄
+\newpage
 
-% \addcontentsline{toc}{chapter}{表目錄}
-% \renewcommand{\numberline}[1]{\lotlabel~#1\hspace*{1em}}
-% \listoftables												%引入表目錄
-% \newpage
+\addcontentsline{toc}{chapter}{表目錄}
+\renewcommand{\numberline}[1]{\lotlabel~#1\hspace*{1em}}
+\listoftables												%引入表目錄
+\newpage
 
-% \addcontentsline{toc}{chapter}{圖目錄}
-% \renewcommand{\numberline}[1]{\loflabel~#1\hspace*{1em}}
-% \listoffigures												%引入圖目錄
-% \newpage													%換新頁
+\addcontentsline{toc}{chapter}{圖目錄}
+\renewcommand{\numberline}[1]{\loflabel~#1\hspace*{1em}}
+\listoffigures												%引入圖目錄
+\newpage													%換新頁
 
-% \addcontentsline{toc}{chapter}{程式碼目錄}
-% \renewcommand{\numberline}[1]{\loclabel~#1\hspace*{1em}}
-% \lstlistoflistings
-% \newpage
+\addcontentsline{toc}{chapter}{程式碼目錄}
+\renewcommand{\numberline}[1]{\loclabel~#1\hspace*{1em}}
+\lstlistoflistings
+\newpage
 
-% \pagenumbering{arabic}										%論文內文之頁數為阿拉伯數字
+\pagenumbering{arabic}										%論文內文之頁數為阿拉伯數字
 
-% \input{chapter1.tex}
-% \input{chapter2.tex}
+\input{chapter1.tex}
+\input{chapter2.tex}
 % \input{chapter3.tex}
 % \input{chapter4.tex}
 % \input{chapter5.tex}
-% \input{chapter6.tex}
-% \vfill
-% \newpage
-% \addcontentsline{toc}{chapter}{參考文獻}
+% \input{chapter6.tex} 
+\vfill
+\newpage
+\addcontentsline{toc}{chapter}{參考文獻}
 
-% \bibliographystyle{unsrt}
-% \bibliography{reference}
+\bibliographystyle{unsrt}
+\bibliography{reference}
 
 \end{document}

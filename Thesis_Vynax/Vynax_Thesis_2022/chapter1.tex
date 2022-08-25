@@ -24,7 +24,7 @@
 
 \section{研究目標}
 \indent
-Open Channel SSD 是一種與作業系統互相合作的一種SSD，而 LightNVM 則是在 Linux 核心模組中專門管理 Open Channel SSD 的模組，此模組目前是以循序寫入的模式實作，不過並沒有將資料分類，再依據各分類改變寫入位置，而我們認為可能還有改善效率的空間，因此本論文將針對此模組修改以增進效能。
+Open Channel SSD 是一種與作業系統互相合作的一種SSD\cite{robotframework}，而 LightNVM \cite{LIU-Thesis}則是在 Linux 核心模組中專門管理 Open Channel SSD 的模組，此模組目前是以循序寫入的模式實作，不過並沒有將資料分類，再依據各分類改變寫入位置，而我們認為可能還有改善效率的空間，因此本論文將針對此模組修改以增進效能。
 \indent
 首先我們將資料分為熱門資料 (Hot Data) 以及冷門資料 (Cold Data)，再用 Q-Learning 演算法計算每次寫入動作的獎勵值 (reward)，而每次寫入時參考之前紀錄的這些獎勵值，決定將這次的要求寫入到最佳的位置，以達到最佳的效率。
 
