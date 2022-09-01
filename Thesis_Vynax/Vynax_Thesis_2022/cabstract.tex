@@ -4,7 +4,7 @@
 %基本資訊
 
 \noindent
-論文名稱：以非監督式學習增進開放通道固態硬碟之存取效能 \\%Robot Framework測試腳本重構工具的改善:增加重構方法之多元選擇\\
+論文名稱：以資料冷熱分群之策略增進開放通道固態硬碟空間回收效率 \\%Robot Framework測試腳本重構工具的改善:增加重構方法之多元選擇\\
 頁數：\\
 校所別：臺北科技大學~資訊工程系碩士班\\
 畢業時間：一百一十學年度第二學期\\
@@ -13,15 +13,19 @@
 指導教授：陳碩漢 博士\\
 %\hspace*{\fill}\\
 \noindent
-關鍵字：LightNVM、Open Channle SSD、SSD、Q-Learning、強化學習、寫入效能、Linux、Kernel Module\\
-%\hspace*{\fill}\\
+關鍵字：LightNVM、Open Channle SSD、SSD、Garbage Collection、垃圾回收效率、Linux、Kernel Module\\
+\hspace*{\fill}\\
 %
 \indent
 一直以來，SSD都有三個限制，Erase Before Write 跟 Limited P/E Cycles 跟 Asymmertic Program/Erase Unit，而過去都是讓 SSD 之中 的 FTL 獨自管理。但是這樣 SSD 並沒有 Host 的資訊，也就是並沒有跟 Host 溝通，造成 Host 與 SSD 雙方的資訊落差，進而導致效率下降。而 Open Channel SSD 就是為了讓 Host 與 FTL 溝通而改良而成的一種新型 SSD。
 %針對原本在 Linux 核心中既有的 SSD 管理系統模組 LightNVM，本論文加入一種機器學習演算法，除了保有原先所提供的管理Open Channle SSD之功能，包含管理讀取、寫入、Garbage Collection等功能，我們在寫入之中加入將資料依據特性分類，將經常更改的熱門資料 (Hot data)放在一起，以及將經過許久才修改一次的冷門資料(Cold Data)擺在一起，讓這個模組在做 Garbage Collection 時可以容易將資料一併整理。
 
 \indent
-而本論文針對 Open Channel SSD 提出了利用強化學習來增進效率，並選擇 Q-Learning 作為案例分析，其特殊的結構 Q-Table，可將資料劃分等級，紀錄每次寫入時獲得的獎勵 (reward)；每次寫入都會用之前紀錄的獎勵值來推測寫在哪個位置的狀況會比較好，以決定當下寫入的位置。讓 Open Channle SSD 不再只能循序寫入，現在可以透過集中 Hot Data 以及 Cold Data，來提升整體效率。
+而本論文針對 Open Channel SSD 提出了將資料劃分為冷到熱四個不同的等級，並將資料依照等級分開擺放來增進 Garbage Collection 的效率，。讓 Open Channle SSD 不再只能循序寫入，現在可以透過集中 Hot Data 以及 Cold Data，來提升整體效率。
+
+%而本論文針對 Open Channel SSD 提出了利用強化學習來增進效率，並選擇 Q-Learning 作為案例分析，其特殊的結構 Q-Table，可將資料劃分等級，紀錄每次寫入時獲得的獎勵 (reward)；每次寫入都會用之前紀錄的獎勵值來推測寫在哪個位置的狀況會比較好，以決定當下寫入的位置。讓 Open Channle SSD 不再只能循序寫入，現在可以透過集中 Hot Data 以及 Cold Data，來提升整體效率。
+
+
 %而這個演算法是一種機器學習演算法 Q-Learning，運用其特殊的結構 Q-Table，將資料劃分等級，紀錄每次寫入時獲得的獎勵 (reward)；每次要寫入時，就會用之前紀錄的獎勵值來推測寫在哪個位置的狀況會比較好，以決定當下寫入的位置。讓 LightNVM 所管理的 Open Channle SSD 不再只能循序寫入，現在可以透過集中 Hot Data 以及 Cold Data，來提升整體效率。
 
 
