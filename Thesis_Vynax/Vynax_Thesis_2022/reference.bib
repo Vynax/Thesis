@@ -6,7 +6,6 @@
 
 @inproceedings{OCSSD_Good,
   title     = {Open-Channel SSD (What is it Good For)},
-  abstract  = {Open-Channel SSDs are storage devices that let hosts take full control over data placement and I/O scheduling. In recent years, they have gained acceptance in data centers (e.g., Alibaba) and for computational storage (e.g., Pliops). Open-Channel SSDs require a host-based Flash Translation Layer (FTL) that manages the physical address space they expose. Open-source FTLs are now available for Open- Channel SSDs, providing either a generic yet tunable block device interface (e.g., pblk, SPDK, OX-Block), or application- specific FTLs developed for a specific data system (e.g., LightLSM, OX-ELEOS). In this paper, we share our ex- perience developing three of those FTLs in the context of the OX controller. We position Open-Channel SSDs in the SSD landscape and discuss their relevance for data systems. In particular, we argue that Open-Channel SSDs cannot be considered as a uniform class of devices. Our main contri- bution is a description of the key design decisions we took in OX related to Open-Channel SSDs. We reflect on lessons learned and propose hints for the co-design of data systems and Open-Channel SSDs.},
   author    = {Picoli, {Ivan Luiz} and Niclas Hedam and Philippe Bonnet and Pinar T{\"o}z{\"u}n},
   year      = {2020},
   month     = jan,
@@ -15,6 +14,90 @@
   booktitle = {Conference on Innovative Data Systems Research}
 }
 
+@inproceedings{SRFTL,
+  author    = {Li, Xin and Shen, Zhaoyan and Ju, Lei and Jia, Zhiping},
+  booktitle = {2014 IEEE Intl Conf on High Performance Computing and Communications, 2014 IEEE 6th Intl Symp on Cyberspace Safety and Security, 2014 IEEE 11th Intl Conf on Embedded Software and Syst (HPCC,CSS,ICESS)},
+  title     = {SRFTL: An Adaptive Superblock-Based Real-Time Flash Translation Layer for NAND Flash Memory},
+  year      = {2014},
+  volume    = {},
+  number    = {},
+  pages     = {332-339},
+  doi       = {10.1109/HPCC.2014.57}
+}
+
+@misc{SSD,
+  title        = {SSD筆記 - 第二篇 SSD結構與性能評定概述},
+  year         = {},
+  howpublished = {\url{https://www.owlfox.org/blog/2019-11-25-coding-for-SSD-part-2/}}
+}
+
+@article{8631191,
+  author  = {Chiu, Yung-Yueh and Lin, I-Chun and Chang, Kai-Chieh and Yang, Bo-Jun and Takeshita, Toshiaki and Yano, Masaru and Shirota, Riichiro},
+  journal = {IEEE Transactions on Electron Devices},
+  title   = {Transconductance Distribution in Program/Erase Cycling of NAND Flash Memory Devices: a Statistical Investigation},
+  year    = {2019},
+  volume  = {66},
+  number  = {3},
+  pages   = {1255-1261},
+  doi     = {10.1109/TED.2019.2892794}
+}
+
+@article{Boukhobza2014ASA,
+  title   = {A Scalable and Highly Configurable Cache-Aware Hybrid Flash Translation Layer},
+  author  = {Jalil Boukhobza and Pierre Olivier and St{\'e}phane Rubini},
+  journal = {Comput.},
+  year    = {2014},
+  volume  = {3},
+  pages   = {36-57}
+}
+
+@inproceedings{Wear_Leveling_Thesis,
+  author    = {Chang, Li-Pin},
+  title     = {On Efficient Wear Leveling for Large-Scale Flash-Memory Storage Systems},
+  year      = {2007},
+  isbn      = {1595934804},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/1244002.1244248},
+  doi       = {10.1145/1244002.1244248},
+  booktitle = {Proceedings of the 2007 ACM Symposium on Applied Computing},
+  pages     = {1126–1130},
+  numpages  = {5},
+  keywords  = {consumer electronics, embedded systems, flash memory, memory management, portable devices, storage systems},
+  location  = {Seoul, Korea},
+  series    = {SAC '07}
+}
+
+@misc{Wear_Leveling_Pic,
+  author       = {SMART-Modular},
+  title        = {Wear Leveling},
+  year         = {},
+  howpublished = {\url{https://www.smartm.com/ch/technology/wear-leveling/}}
+}
+
+@misc{Mapping_Table,
+  author       = {yunchih},
+  title        = {SSD-FTL},
+  year         = {},
+  howpublished = {\url{https://www.csie.ntu.edu.tw/~yunchih/docs/cs/ssd-ftl/}}
+}
+
+@misc{Garbage_Collection,
+  author       = {Solid State Storage Technology Corporation, SSSTC},
+  title        = {Garbage Collection},
+  year         = {},
+  howpublished = {\url{https://ssstc.com/industrial-ssd-features/garbage-collection-ssd/}}
+}
+
+@inproceedings{OPSSD,
+  title     = {Introduction to Open-Channel/Denali Solid State Drives},
+  author    = {Matias Bjørling, Western Digital},
+  year      = {2018},
+  month     = sep,
+  day       = {25},
+  language  = {English},
+  booktitle = {SDC 2018}
+}
 
 @inproceedings{LightNVM,
   author    = {Matias Bj{\o}rling and Javier Gonzalez and Philippe Bonnet},
