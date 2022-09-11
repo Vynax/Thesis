@@ -5,7 +5,7 @@
 SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟(HDD)，SSD改善了噪音、震動、讀寫速度慢，容易因震動外力等因素而毀損等等的問題；SSD 也不需要在資料分散時，藉由重組硬碟磁區來減少讀取時間。而重點是，SSD作為儲存裝置，還具有這些優點：\cite{SSD}
 \begin{itemize}
     \item 存取時間固定，不像 HDD 有不穩定的搜尋時間
-    \item 體積較小，適合放在手機、筆記型電腦等行動裝置之中
+    \item 體積較小，適合放在筆記型電腦等行動裝置之中
     \item 少了機械結構，所以不會因機械故障導致毀損
 \end{itemize}
 
@@ -29,24 +29,24 @@ SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟
 \end{itemize}
 以下將一一介紹這些特性。
 
-\subsection{Asymmertic Program/Erase unit}\label{s2.1.2}
+\subsection{Asymmertic Program/Erase Unit}\label{s2.1.2}
 \indent
 Flash cell 會由多個組成一個 page，而數以百計的 page 會組成一個 block。\\
 而 Asymmertic Program/Erase unit 指的意思是，當要讀取或是寫入時，可以 page 為單位寫入，但是如果要 erase 的時候，一次只能以 block 為單位，無法以 page 為單位 Write/Read 跟 Erase 的大小不一樣，所以稱為 Asymmertic (非對稱)。
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/Asymmertic_P-E_unit.png}
-    \caption{Asymmertic Program/Erase unit}
+    \caption{Asymmertic Program/Erase Unit}
     \label{f2.1}
 \end{figure}
 
-\subsection{Erase before write}\label{s2.1.3}
+\subsection{Erase Before Write}\label{s2.1.3}
 \indent
 一旦寫入資料到一個 Page 裡面，如果要更改 Page 裡面的資料，只能先清空(Erase)，再將資料寫入。而且如\ref{s2.1.2}節所述，清空時還只能清空比 Page 還大的 Block 才行。\cite{SRFTL}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{picture/ch2/erase_before_write.png}
-    \caption{Erase before write}
+    \caption{Erase Before Write}
     \label{f2.2}
 \end{figure}
 

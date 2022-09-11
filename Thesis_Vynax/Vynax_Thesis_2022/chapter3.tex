@@ -17,7 +17,8 @@
 
 \section{處理檔案系統要求之流程}\label{s3.2}
 \indent
-檔案系統提出 Request 要求之後，LightNVM 會對 Request 拆解，儲存成 LightNVM 自己容易處理的形式，但是在拆解的同時，會損失一些資訊，所以首先我們要先在拆解 Request 之前把 Request 的大小先從 Request 的資料結構 bio 擷取出來，用大小來判斷這個 Request 的資料屬於哪一個分群，並將資訊塞入 LightNVM 用來儲存 Request 的地方 - Ring Buffer 之中，最後再計算平均值，給下次 Request 傳進時使用。
+檔案系統提出 Request 要求之後，LightNVM 會對 Request 拆解，儲存成 LightNVM 自己容易處理的形式，但是在拆解的同時，會損失一些資訊，所以首先我們要先在拆解 Request 之前把 Request 的大小先從 Request 的資料結構 bio 擷取出來，用大小來判斷這個 Request 的資料屬於哪一個分群，並將資訊塞入 LightNVM 用來儲存 Request 的地方 - Ring Buffer 之中，最後再計算平均值，給下次 Request 傳進時使用。\cite{LightNVM}
+\newpage
 
 \subsection{以平均值劃分熱門資料及冷門資料}\label{s3.2.1}
 \indent
