@@ -2,24 +2,24 @@
 
 \section{SSD}\label{s2.1}
 \indent
-SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟(HDD)，SSD改善了噪音、震動、讀寫速度慢，容易因震動外力等因素而毀損等等的問題；SSD 也不需要在資料分散時，藉由重組硬碟磁區來減少讀取時間。而重點是，SSD作為儲存裝置，還具有這些優點：\cite{SSD}
+SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟 HDD (Hard Disk Drive)，SSD 改善了噪音、震動、讀寫速度慢，容易因震動外力等因素而毀損等等的問題；SSD 也不需要在資料分散時，藉由重組硬碟磁區來減少讀取時間。而重點是，SSD作為儲存裝置，還具有這些優點：\cite{SSD}
 \begin{itemize}
     \item 存取時間固定，不像 HDD 有不穩定的搜尋時間
     \item 體積較小，適合放在筆記型電腦等行動裝置之中
     \item 少了機械結構，所以不會因機械故障導致毀損
 \end{itemize}
 
-而這些都是因為 SSD 採用了 NAND FLASH Memory。
+而這些都是因為 SSD 採用了 NAND FLASH Memory。\cite{SSDFANS}
 
 \subsection{NAND FLASH Memory}\label{s2.1.1}
 \indent
 是電子抹除式可程式化唯讀記憶體(Electrically-Erasable Programmable Read-Only Memory，簡稱EEPROM或E2PROM)的其中一種，通常為 SSD、記憶卡、以及隨身碟的主要材料元件，可透過電子方式多次複寫。\\
-這種元件的基本單位為 cell，而依據每個 cell 可儲存的 bit，可分為：
+這種元件的基本單位為 Cell，而依據每個 Cell 可儲存的 bit，可分為：\cite{2014xv}
 \begin{itemize}
-    \item \textbf{SLC：}Single-level cell   一個 cell 存一個位元
-    \item \textbf{MLC：}Multi-level cell    一個 cell 存兩個位元
-    \item \textbf{TLC：}Triple-level cell   一個 cell 存三個位元
-    \item \textbf{QLC：}Quad-level cell     一個 cell 存四個位元
+    \item \textbf{SLC：}Single-level Cell   一個 Cell 存一個位元
+    \item \textbf{MLC：}Multi-level Cell    一個 Cell 存兩個位元
+    \item \textbf{TLC：}Triple-level Cell   一個 Cell 存三個位元
+    \item \textbf{QLC：}Quad-level Cell     一個 Cell 存四個位元
 \end{itemize}
 不過，所有的 NAND FLASH Memory均具有以下特性：
 \begin{itemize}
@@ -31,8 +31,8 @@ SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟
 
 \subsection{Asymmertic Program/Erase Unit}\label{s2.1.2}
 \indent
-Flash cell 會由多個組成一個 page，而數以百計的 page 會組成一個 block。\\
-而 Asymmertic Program/Erase unit 指的意思是，當要讀取或是寫入時，可以 page 為單位寫入，但是如果要 erase 的時候，一次只能以 block 為單位，無法以 page 為單位 Write/Read 跟 Erase 的大小不一樣，所以稱為 Asymmertic (非對稱)。
+一個 Page 由多個 Flash Cell 所組成，而數以百計的 Page 會組成一個 Block。\\
+而 Asymmertic Program/Erase Unit 指的意思是，當要讀取或是寫入時，可以 Page 為單位寫入，但是如果要 Erase 的時候，一次只能以 Block 為單位，無法以 Page 為單位 Write/Read 跟 Erase 的大小不一樣，所以稱為 Asymmertic (非對稱)。
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/Asymmertic_P-E_unit.png}
@@ -50,9 +50,9 @@ Flash cell 會由多個組成一個 page，而數以百計的 page 會組成一�
     \label{f2.2}
 \end{figure}
 
-\subsection{Limited P/E cycles}\label{s2.1.4}
+\subsection{Limited P/E Cycles}\label{s2.1.4}
 \indent
-Limited Program/Erase Cycle，簡稱Limited P/E cycle，又被稱為 Wear out。重複的寫入會為用來儲存電子的 Flash Memory Cell 帶來不可逆的損害，因為隨著每次電子出入 Cell 的同時，Floating Gate 旁邊的 Oxide layer 就會越來越薄，最後薄到無法鎖住電子，整個 Cell 就會毀損\cite{8631191}。而隨著 Flash Memory 的製造商想要把越多的位元塞進一個 Cell 裡面，這些 Cell 的壽命就越來越少，例如 MLC，TLC，QLC 等等。
+Limited Program/Erase Cycle，簡稱Limited P/E Cycle，又被稱為 Wear out。每次寫入會為用來儲存電子的 Flash Memory Cell 帶來不可逆的損害，因為隨著每次電子出入 Cell 的同時，Floating Gate 旁邊的 Oxide layer 就會越來越薄，最後薄到無法鎖住電子，整個 Cell 就會毀損\cite{8631191}。而隨著 Flash Memory 的製造商想要把越多的位元塞進一個 Cell 裡面，這些 Cell 的壽命就越來越少，例如 MLC，TLC，QLC 等等。
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{picture/ch2/Limited_P-E_Cycles.png}
@@ -89,7 +89,7 @@ FTL 的全名為 Flash Translation Layer，負責管理為了降低 Flash Memory
 
 \subsection{Mapping Table}\label{s2.2.2}
 \indent
-由於\ref{s2.1.3}節所提到的 Erase before Write 問題，因此在 SSD 會先將接到的資料暫存起來，之後寫到其他地方，這樣可以減少寫入的延遲；但同時為了讓 Host 覺得使用跟 SSD 與傳統硬碟的方式一致，就多了一個轉換表，紀錄 Host 傳給SSD的 Logical Address 是對應到實際的哪個Physical Address。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。
+由於\ref{s2.1.3}節所提到的 Erase before Write 問題，因此在 SSD 會先將接到的資料暫存起來，之後寫到其他地方，這樣可以減少寫入的延遲；但同時為了讓 Host 覺得使用跟 SSD 與傳統硬碟的方式一致，就多了一個轉換表，紀錄 Host 傳給 SSD的 Logical Address 是對應到實際的哪個 Physical Address。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/mapping_table.png}
@@ -107,10 +107,10 @@ FTL 的全名為 Flash Translation Layer，負責管理為了降低 Flash Memory
     \label{f2.7}
 \end{figure}
 
-\section{Open Channle SSD}\label{s2.3}
+\section{Open-Channel SSD}\label{s2.3}
 \indent
 雖然 SSD 已經有了上述技術來管理以及延長壽命，不過由於這些功能都位於 SSD 內部的 FTL，Host 不知道這些資訊。而在雙方沒有溝通的狀況下，SSD 其實不知道 Host 想要的資料是什麼，容易造成重複讀取或是效率下降的問題，例如 SSD 可能會 caching 到 Host 不需要的資料等問題。
-而 Open Channel SSD 開啟了一個可以利用 host 資訊增進存取效能的可能性。
+而 Open-Channel SSD 開啟了一個可以利用 host 資訊增進存取效能的可能性。
 %雖然 SSD 已經有了上述技術來管理以及延長壽命，不過由於這些技術仰賴於 SSD 內部的控制器及韌體管理，Host 完全不知情，所以寫入及讀取的延遲時間取決於韌體以及SSD控制器的穩定度，而為了讓延遲時間能夠掌控在 Host 的手上，也同時為了降低成本，於是有了Open Channel SSD。Open Channle SSD 將下列技術往上交給 Host 管理。
 \begin{itemize}
     \item Mapping Table
@@ -120,13 +120,13 @@ FTL 的全名為 Flash Translation Layer，負責管理為了降低 Flash Memory
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/OPSSD.png}
-    \caption{Open Channle SSD\cite{OPSSD}}
+    \caption{Open Channel SSD\cite{OPSSD}}
     \label{f2.8}
 \end{figure}
 
 \section{LightNVM}\label{s2.4}
 \indent
-LightNVM 是 Linux 之中用來管理 Open Channel SSD 的一個 Kernel Module (模組)，來實作上述交給 Host 管理的功能，使其可以讓 Linux 系統正確辨識並能夠用控制一般SSD的方式對 Open Channel SSD 提出讀取、寫入、刪除等要求。本論文也是修改此模組來實作我們所需的功能。
+LightNVM 是 Linux 之中用來管理 Open Channel SSD 的一個 Kernel Module，來實作上述交給 Host 管理的功能，使其可以讓 Linux 系統正確辨識並能夠用控制一般SSD的方式對 Open Channel SSD 提出讀取、寫入、刪除等要求。本論文也是修改此模組來實作我們所需的功能。
 
 \subsection{Line}\label{s2.4.1}
 \indent

@@ -2,7 +2,7 @@
 \indent
 本論文為提升 Garbage Collection 的效率，以及降低 Garbage Collection 的次數，而提出此設計。透過實作新的演算法，將其與 LightNVM 既有的寫入流程結合，如此一來，LightNVM 在寫入時，會透過這個方法挑選寫入位置，以達成提升效率的目的。\\
 \indent
-修改大致可分為兩部分，一部分為 LightNVM 處理檔案系統的 Request，將資料存入 Ring Buffer；另一部分為 LightNVM 的 write thread 會被喚醒，檢查 Ring Buffer 並將 entry 中紀錄的資料取出，寫到真正的SSD之中，本章節會解釋修改這兩部分的哪些環節。
+修改大致可分為三部分，第一部分為初始化，讓原本 LightNVM 從準備一個 Line 變成準備四個 Line，一部分為 LightNVM 處理檔案系統的 Request，將資料存入 Ring Buffer；另一部分為 LightNVM 的 Write Thread 會被喚醒，檢查 Ring Buffer 並將 Entry 中紀錄的資料取出，寫到真正的SSD之中，本章節會解釋修改這兩部分的哪些環節。
 
 \section{初始化時修改為準備四個 Line}\label{s3.1}
 \indent
@@ -10,14 +10,14 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{picture/ch3/4Line.png}
+    \includegraphics[width=1\textwidth]{picture/ch3/4Line.png}
     \caption{準備四個 Line}
     \label{f3.1}
 \end{figure}
 
 \section{處理檔案系統要求之流程}\label{s3.2}
 \indent
-檔案系統提出 Request 要求之後，LightNVM 會對 Request 拆解，儲存成 LightNVM 自己容易處理的形式，但是在拆解的同時，會損失一些資訊，所以首先我們要先在拆解 Request 之前把 Request 的大小先從 Request 的資料結構 bio 擷取出來，用大小來判斷這個 Request 的資料屬於哪一個分群，並將資訊塞入 LightNVM 用來儲存 Request 的地方 - Ring Buffer 之中，最後再計算平均值，給下次 Request 傳進時使用。\cite{LightNVM}
+檔案系統提出 Request 要求之後，LightNVM 會對 Request 拆解，儲存成 LightNVM 自己容易處理的形式，但是在拆解的同時，會損失一些資訊，所以首先我們要先在拆解 Request 之前把 Request 的大小先從 Request 的資料結構 Bio (Block I/O) \cite{10.1145/2619092}擷取出來，用大小來判斷這個 Request 的資料屬於哪一個分群，並將資訊塞入 LightNVM 用來儲存 Request 的地方 - Ring Buffer 之中，最後再計算平均值，給下次 Request 傳進時使用。\cite{LightNVM}
 \newpage
 
 \subsection{以平均值劃分熱門資料及冷門資料}\label{s3.2.1}
@@ -25,7 +25,7 @@
 首先為了劃分熱門以及冷門資料，我們將過去一萬筆 Request 大小的平均值當作基準，劃分四個等級，平均值的 0\% - 50\% 為最熱門的資料，平均值的 50\% - 100 \% 為第二熱門的資料，平均值的 100\% - 150\% 為第二冷門資料，平均值的 150\% 以上為最冷門的資料。並且由熱門到冷門，我們會分配到 Line 0 到 Line 3。
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{picture/ch3/hot_cold.png}
+    \includegraphics[width=0.7\textwidth]{picture/ch3/hot_cold.png}
     \caption{熱門資料與冷門資料}
     \label{f3.2}
 \end{figure}
@@ -35,7 +35,7 @@
 在得到 Request 大小時，我們需要從檔案系統傳給 LightNVM 的資料結構 bio 之中，找到 Request 大小的值；之後再以 Request 大小與平均值，判斷當下的 Request 屬於哪一類。
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{picture/ch3/get_rq_size_hot_cold.png}
+    \includegraphics[width=1\textwidth]{picture/ch3/get_rq_size_hot_cold.png}
     \caption{判斷 Request 分群}
     \label{f3.3}
 \end{figure}
@@ -46,44 +46,44 @@
 在判斷完分群之後，我們需要拿剛剛得到的 Request 大小與平均值計算出新的平均值；由於我們需要前一萬筆 Request 大小的平均值，所以得到大小之後將其乘以 0.0001 倍再與我們加入 LightNVM 的平均值乘以 0.9999 倍之後相加，之後下一次檔案系統傳送 Request 進來時，就可以繼續用來判斷分群。
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{picture/ch3/new_average.png}
+    \includegraphics[width=0.8\textwidth]{picture/ch3/new_average.png}
     \caption{計算新平均值}
     \label{f3.4}
 \end{figure}
 
 \subsection{將 Request 所屬分群的資訊放入 Ring Buffer 中}\label{s3.2.4}
 \indent
-LightNVM 在接到檔案系統的 Request 之後，會將 Request 的資料拆解成數個 Page，每個 Page 都會記錄成 Ring Buffer 一個 entry 之中，之後便會喚醒 LightNVM 背景的 write thread，從 Ring Buffer 存取剛剛放進去的 entry，來得知寫入的資料位於 Host 記憶體，我們在這個 entry 之中加入要存入哪個 Line，也就是冷熱分群的資訊，以便之後的 write thread 使用。
+LightNVM 在接到檔案系統的 Request 之後，會將 Request 的資料拆解成數個 Page，每個 Page 都會記錄成 Ring Buffer 一個 Entry 之中，之後便會喚醒 LightNVM 背景的 write thread，從 Ring Buffer 存取剛剛放進去的 Entry，來得知寫入的資料位於 Host 記憶體，我們在這個 Entry 之中加入要存入哪個 Line，也就是冷熱分群的資訊，以便之後的 write thread 使用。
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{picture/ch3/store_line_in_ring_buffer_entry.png}
-    \caption{將分群資訊放入 Ring Buffer 的單位資料結構(entry)}
+    \includegraphics[width=0.7\textwidth]{picture/ch3/store_line_in_ring_buffer_entry.png}
+    \caption{將分群資訊放入 Ring Buffer 的單位資料結構(Entry)}
     \label{f3.5}
 \end{figure}
 
 \section{實際寫入之過程}\label{s3.3}
 \indent
-LightNVM 的 Write thread 被喚醒之後，會從剛剛紀錄到 Ring Buffer 之中的 entry 得知要寫入的資料在哪裡，而我們也跟著得知剛剛我們放入的資訊，也就是每個 entry 所屬的冷熱分群，接著我們將所有當次所提取的 entry 的所屬冷熱分群總和之後取平均，得到的平均值就是我們最後寫入的 Line，最後我們將 Line 切換到我們的目標之後，LightNVM 就會根據我們所提供的 Line 來做 allocation，最終傳給 Open Channel SSD。
+LightNVM 的 Write Thread 被喚醒之後，會從剛剛紀錄到 Ring Buffer 之中的 Entry 得知要寫入的資料在哪裡，而我們也跟著得知剛剛我們放入的資訊，也就是每個 Entry 所屬的冷熱分群，接著我們將所有當次所提取的 Entry 的所屬冷熱分群總和之後取平均，得到的平均值就是我們最後寫入的 Line，最後我們將 Line 切換到我們的目標之後，LightNVM 就會根據我們所提供的 Line 來做 allocation，最終傳給 Open Channel SSD。
 
-\subsection{從 Ring Buffer 中蒐集 entry}\label{s3.3.1}
+\subsection{從 Ring Buffer 中蒐集 Entry}\label{s3.3.1}
 \indent
-每次 LightNVM 從 Ring Buffer 之中抽取出的 entry 數量不一定一樣，假設這次會取四個 entry 的資料，分別所屬為 Line 3、2、1、2，那最後平均值是 2。
+每次 LightNVM 從 Ring Buffer 之中抽取出的 Entry 數量不一定一樣，假設這次會取四個 Entry 的資料，分別所屬為 Line 3、2、1、2，那最後平均值是 2。
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{picture/ch3/get_entry_from_ring_buffer.png}
-    \caption{從數個 entry 取出 Line 之後平均}
+    \includegraphics[width=0.7\textwidth]{picture/ch3/get_entry_from_ring_buffer.png}
+    \caption{從數個 Entry 取出 Line 之後平均}
     \label{f3.6}
 \end{figure}
 
 \subsection{切換 Line 之後傳送給 Open Channel SSD}\label{s3.3.2}
 \indent
-按照剛剛計算的平均值切換 Line 之後，LightNVM 會根據我們指定的 Line 做 allocation，最後將資料以及位置往下傳給 Open Channel SSD(圖例延續 \ref{s3.3.1})。
+按照剛剛計算的平均值切換 Line 之後，LightNVM 會根據我們指定的 Line 做 Allocation，最後將資料以及位置往下傳給 Open Channel SSD(圖例延續 \ref{s3.3.1})。
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{picture/ch3/switch_line_to_opssd.png}
-    \caption{切換 Line 之後 allocation，最後傳給 Open Channel SSD}
+    \includegraphics[width=1\textwidth]{picture/ch3/switch_line_to_opssd.drawio.png}
+    \caption{切換 Line 之後 Allocation，最後傳給 Open Channel SSD}
     \label{f3.7}
 \end{figure}
 %\subsection{建立開發外掛程式之環境}
