@@ -5,18 +5,18 @@
 
 \noindent
 Title:Exploring Hot/Cold Data Separation for Garbage Collection Efficiency Enhancement on Open-Channel SSD\\
-Pages:24\\
+Pages:28\\
 School: National Taipei University of Technology\\
 Department: Computer Science and Information Engineering\\
 Time: September,2022\\
 Degree: Master\\
-Researcher: CHENG-YUEH WU\\
-Advisor: SHOU-HAN CHEN, Ph.D.\\
+Researcher: Cheng-Yueh Wu\\
+Advisor: Shou-Han Chen, Ph.D.\\
 %\hspace*{\fill}\\
 Keywords: LightNVM, Open-Channel SSD, SSD, Garbage Collection, Performance, Linux, Kernel Module\\
 %\hspace*{\fill}\\
 \indent
-In the past, the FTL (Flash Translation Layer) in the SSD (Solid State Drive) has been left to manage the SSD internal alone. However, the SSD did not communicate with the Host, resulting in a gap in information between the Host and the SSD, which in turn led to a decrease in efficiency. Open Channel SSD is a new type of SSD that is improved to allow the Host to communicate with the FTL.
+In the past, the Flash Translation Layer (FTL) in the Solid State Drive (SSD) has been left to manage the SSD internal alone. However, the SSD did not communicate with the Host, resulting in a gap in information between the Host and the SSD, which in turn led to a decrease in efficiency. Open Channel SSD is a new type of SSD that is improved to allow the Host to communicate with the FTL.
 
 \indent
 This thesis proposes a method by dividing the data into four different levels, from cold to hot, for Open Channel SSD. We separate the data according to the level to improve the efficiency of Garbage Collection. Open-Channel SSD can no longer only write sequentially. They are able to improve the overall efficiency by centralizing Hot Data and Cold Data now.
