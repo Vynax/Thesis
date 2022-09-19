@@ -5,18 +5,21 @@
 
 \noindent
 Title:Exploring Hot/Cold Data Separation for Garbage Collection Efficiency Enhancement on Open-Channel SSD\\
-Pages:28\\
+Pages:29\\
 School: National Taipei University of Technology\\
 Department: Computer Science and Information Engineering\\
-Time: September,2022\\
+Time: September, 2022\\
 Degree: Master\\
 Researcher: Cheng-Yueh Wu\\
 Advisor: Shou-Han Chen, Ph.D.\\
 %\hspace*{\fill}\\
 Keywords: LightNVM, Open-Channel SSD, SSD, Garbage Collection, Performance, Linux, Kernel Module\\
-%\hspace*{\fill}\\
+% \hspace*{\fill}\\
+
+Solid State Drives (SSD) are a type of storage device that has been widely used in various computers in recent years, and are gradually gaining market share because they do not have mechanical components, have fast access speeds, and are less likely to be damaged by external forces such as vibrations. However, as manufacturers try to keep costs low, the limitations of this type of hard drive have become more obvious.
+
 \indent
-In the past, the Flash Translation Layer (FTL) in the Solid State Drive (SSD) has been left to manage the SSD internal alone. However, the SSD did not communicate with the Host, resulting in a gap in information between the Host and the SSD, which in turn led to a decrease in efficiency. Open Channel SSD is a new type of SSD that is improved to allow the Host to communicate with the FTL.
+In the past, the Flash Translation Layer (FTL) in the SSD has been left to manage the SSD internal alone. However, the SSD did not communicate with the Host, resulting in a gap in information between the Host and the SSD, which in turn led to a decrease in efficiency. Open Channel SSD is a new type of SSD that is improved to allow the Host to communicate with the FTL.
 
 \indent
 This thesis proposes a method by dividing the data into four different levels, from cold to hot, for Open Channel SSD. We separate the data according to the level to improve the efficiency of Garbage Collection. Open-Channel SSD can no longer only write sequentially. They are able to improve the overall efficiency by centralizing Hot Data and Cold Data now.

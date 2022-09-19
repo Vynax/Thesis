@@ -71,7 +71,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{picture/ch2/FTL.png}
+    \includegraphics[width=0.8\textwidth]{picture/ch2/FTL.png}
     \caption{Flash Translation Layer}
     \label{f2.4}
 \end{figure}
@@ -89,7 +89,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \subsection{Mapping Table}\label{s2.2.2}
 \indent
-由於\ref{s2.1.3}節所提到的 Erase Before Write 問題，因此在 SSD 會先將接收到的資料暫存，之後寫到其他區域，這樣可以減少寫入的延遲；同時為了讓 Host 覺得使用跟 SSD 與傳統硬碟的方式一致，所以增加轉換表，紀錄 Host 傳給 SSD 的 Logical Address 所對應的實際 Physical Address(如圖\ref{f2.6}所示)。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。
+由於\ref{s2.1.3}節所提到的 Erase Before Write 問題，因此在 SSD 會先將接收到的資料暫存，之後寫到其他區域，這樣可以減少寫入的延遲；同時為了讓 Host 覺得使用跟 SSD 與傳統硬碟的方式一致，所以增加轉換表，紀錄 Host 傳給 SSD 的 Logical Address 所對應的實際 Physical Address(如圖\ref{f2.6}所示)。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。\cite{5496970}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/mapping_table.png}
@@ -99,7 +99,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \subsection{Garbage Collection}\label{s2.2.3}
 \indent
-由於\ref{s2.2.2}節所提到的功能，將資料寫到別的位置時，原本位置的 Block 就會有某些資料被視為無效，但還是有些資料是有效的，這時候就需要讀出來放到其他 Block 裡面，才可以將原本位置的 Block 清空，繼續作為空的 Block 寫入(如圖\ref{f2.7}所示)。由於清除資料時的延遲較高，FTL 通常都會挑選比較空閒的時候才做這些搬移資料、清空的動作。
+由於\ref{s2.2.2}節所提到的功能，將資料寫到別的位置時，原本位置的 Block 就會有某些資料被視為無效，但還是有些資料是有效的，這時候就需要讀出來放到其他 Block 裡面，才可以將原本位置的 Block 清空，繼續作為空的 Block 寫入(如圖\ref{f2.7}所示)。由於清除資料時的延遲較高，FTL 通常都會挑選比較空閒的時候才做這些搬移資料、清空的動作。\cite{BUX20101172}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/garbage_collection.png}
@@ -137,7 +137,6 @@ LightNVM 是 Linux 之中用來管理 Open Channel SSD 的一個 Kernel Module�
     \item Lun
     \item Block
     \item Page
-    \item Sector
 \end{itemize}
 而 Line 會由每個 Lun 之中的一個 Block 所組成，如圖\ref{f2.9}所示。而在 LightNVM 之中，寫入以及 Garbage Collection 均採用此單位作為管理的主要架構，本論文提出的修改部分也與此有關。
 \begin{figure}[H]
