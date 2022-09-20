@@ -52,7 +52,7 @@ SSD，全名：Solid State Drive，中文：固態硬碟。相較於傳統硬碟
 
 \subsection{Limited P/E Cycles}\label{s2.1.4}
 \indent
-Limited Program/Erase Cycle，簡稱Limited P/E Cycle，又被稱為 Wear Out。每次寫入會為用來儲存電子的 Flash Memory Cell 帶來不可逆的損害，原因是每次電子出入 Cell ，Floating Gate 旁邊的 Oxide layer 就會越來越薄(如圖\ref{f2.3}所示)，最後薄到無法鎖住電子，整個 Cell 就會毀損\cite{8631191}。而隨著 Flash Memory 的製造商想要把越多的位元塞進一個 Cell 裡面，這些 Cell 的壽命就越來越少，例如 MLC，TLC，QLC 等等。
+Limited Program/Erase Cycle，簡稱Limited P/E Cycle，又被稱為 Wear Out。每次寫入會為用來儲存電子的 Flash Memory Cell 帶來不可逆的損害，原因是每次電子出入 Cell ，Floating Gate 旁邊的 Oxide layer 就會越來越薄(如圖\ref{f2.3}所示)，最後因過薄導致無法鎖住電子，整個 Cell 就會毀損\cite{8631191}。而隨著 Flash Memory 的製造商想要把越多的位元塞進一個 Cell 裡面，這些 Cell 的壽命就越來越少，例如 MLC，TLC，QLC 等等。
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{picture/ch2/Limited_P-E_Cycles.png}
@@ -62,7 +62,7 @@ Limited Program/Erase Cycle，簡稱Limited P/E Cycle，又被稱為 Wear Out。
 
 \section{FTL}\label{s2.2}
 \indent
-為了降低\ref{s2.1.2}節至\ref{s2.1.4}節所提到的特性所造成壽命銳減的問題，SSD的製造商通常都會將 FTL 導入至 SSD 裡面(如圖\ref{f2.4}所示)。
+為了降低\ref{s2.1.2}節至\ref{s2.1.4}節所提到的特性造成壽命銳減的問題，SSD的製造商通常都會將 FTL 導入至 SSD 裡面(如圖\ref{f2.4}所示)。
 FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而產生的技術，並模擬成一個普通的硬碟，讓作業系統管理SSD與傳統硬碟 (HDD) 的方式一致。而其中的技術通常包含：\cite{Boukhobza2014ASA}
 \begin{itemize}
     \item Wear Leveling
@@ -79,7 +79,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \subsection{Wear Leveling}\label{s2.2.1}
 \indent
-因為\ref{s2.1.4}節所提到的問題，如果每次都寫入同一個位置會導致 Cell 的壽命大幅衰減，因此為了延長每個 Cell 的壽命，寫入時需要從壽命比較長的 Cell，也就是當下寫入次數較少的 Cell 開始寫入，以平衡整體 SSD 的壽命(如圖\ref{f2.5}所示)。所以 SSD 會記錄每個 Cell 的存取次數，來決定下次要寫入到哪裡。\cite{Wear_Leveling_Thesis}
+因為\ref{s2.1.4}節所提到的問題，如果每次都寫入同一個位置會導致 Cell 的壽命大幅衰減，因此為了延長每個 Cell 的壽命，寫入時需要從壽命比較長的 Cell，也就是當下寫入次數較少的 Cell 開始寫入，以平均整體 SSD 的壽命(如圖\ref{f2.5}所示)。所以 SSD 會記錄每個 Cell 的存取次數，來決定下次要寫入到哪裡。\cite{Wear_Leveling_Thesis}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/Wear_Leveling.png}
@@ -89,7 +89,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \subsection{Mapping Table}\label{s2.2.2}
 \indent
-由於\ref{s2.1.3}節所提到的 Erase Before Write 問題，因此在 SSD 會先將接收到的資料暫存，之後寫到其他區域，這樣可以減少寫入的延遲；同時為了讓 Host 覺得使用跟 SSD 與傳統硬碟的方式一致，所以增加轉換表，紀錄 Host 傳給 SSD 的 Logical Address 所對應的實際 Physical Address(如圖\ref{f2.6}所示)。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。\cite{5496970}
+由於\ref{s2.1.3}節所提到的 Erase Before Write 問題，因此 SSD 會先將接收到的資料暫存，之後寫入至其他區域，這樣可以減少寫入的延遲；同時為了讓 Host 覺得使用 SSD 與傳統硬碟的方式一致，所以增加轉換表，紀錄 Host 傳給 SSD 的 Logical Address 所對應的實際 Physical Address(如圖\ref{f2.6}所示)。通常會跟 \ref{s2.2.1} 所提到的 Wear Leveling 結合。\cite{5496970}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/mapping_table.png}
@@ -99,7 +99,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \subsection{Garbage Collection}\label{s2.2.3}
 \indent
-由於\ref{s2.2.2}節所提到的功能，將資料寫到別的位置時，原本位置的 Block 就會有某些資料被視為無效，但還是有些資料是有效的，這時候就需要讀出來放到其他 Block 裡面，才可以將原本位置的 Block 清空，繼續作為空的 Block 寫入(如圖\ref{f2.7}所示)。由於清除資料時的延遲較高，FTL 通常都會挑選比較空閒的時候才做這些搬移資料、清空的動作。\cite{BUX20101172}
+由於\ref{s2.2.2}節所提到的功能，將資料寫到別的位置時，原本位置的 Block 就會有某些資料被視為無效，但還是有些資料是有效的，這時候就需要讀出來放到其他 Block 裡面，才可以將原本位置的 Block 清空，繼續作為空的 Block 寫入(如圖\ref{f2.7}所示)。由於清除資料時的延遲較高，FTL 通常都會挑選比較空閒的時候才執行這些搬移、清空資料的動作。\cite{BUX20101172}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{picture/ch2/garbage_collection.png}
@@ -109,7 +109,7 @@ FTL 的全名為 Flash Translation Layer，負責針對 Flash Memory 特性而�
 
 \section{Open-Channel SSD}\label{s2.3}
 \indent
-雖然 SSD 已經有了上述技術來管理以及延長壽命，不過由於這些功能都位於 SSD 內部的 FTL，Host 不知道這些資訊。而在雙方沒有溝通的狀況下，SSD 其實不知道 Host 想要的資料是什麼，容易造成重複讀取或是效率下降的問題，例如 SSD 可能會 Caching 到 Host 不需要的資料等問題。
+雖然 SSD 已經有了上述技術來管理以及延長壽命，不過這些功能都位於 SSD 內部的 FTL，Host 不知道這些資訊。而在雙方沒有溝通的狀況下，SSD 其實不知道 Host 需要的資料是什麼，容易造成重複讀取或是效率下降的問題，例如 SSD 可能會 Caching 到 Host 不需要的資料等問題。
 而 Open-Channel SSD 開啟了一個可以利用 Host 資訊增進存取效能的可能性。\\
 這種SSD將下列三種功能交給 Host 管理(如圖\ref{f2.8}所示)：
 %雖然 SSD 已經有了上述技術來管理以及延長壽命，不過由於這些技術仰賴於 SSD 內部的控制器及韌體管理，Host 完全不知情，所以寫入及讀取的延遲時間取決於韌體以及SSD控制器的穩定度，而為了讓延遲時間能夠掌控在 Host 的手上，也同時為了降低成本，於是有了Open Channel SSD。Open Channle SSD 將下列技術往上交給 Host 管理。

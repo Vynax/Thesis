@@ -22,7 +22,7 @@ Solid State Drives (SSD) are a type of storage device that has been widely used 
 In the past, the Flash Translation Layer (FTL) in the SSD has been left to manage the SSD internal alone. However, the SSD did not communicate with the Host, resulting in a gap in information between the Host and the SSD, which in turn led to a decrease in efficiency. Open Channel SSD is a new type of SSD that is improved to allow the Host to communicate with the FTL.
 
 \indent
-This thesis proposes a method by dividing the data into four different levels, from cold to hot, for Open Channel SSD. We separate the data according to the level to improve the efficiency of Garbage Collection. Open-Channel SSD can no longer only write sequentially. They are able to improve the overall efficiency by centralizing Hot Data and Cold Data now.
+This thesis proposes a method by dividing the data into four different levels, from cold to hot, for Open Channel SSD. We separate the data according to the level to improve the efficiency of Garbage Collection. Open-Channel SSD can no longer only write sequentially. They are able to improve the overall efficiency by centralizing Hot Data and Cold Data now. Then we will compare the number of Garbage Collection times for the same amount of data written to verify if there is any efficiency improvement.
 
 %過去都是讓 SSD 之中 的 FTL 獨自管理內部。但是這樣 SSD 並沒有跟 Host 溝通，造成 Host 與 SSD 雙方的資訊落差，進而導致效率下降。而 Open Channel SSD 就是為了讓 Host 與 FTL 溝通而改良而成的一種新型 SSD。 DeepL 翻譯再改的
 
